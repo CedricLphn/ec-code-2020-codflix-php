@@ -1,0 +1,14 @@
+/**********
+* Forms style
+**********/
+
+.custom-form .error-msg {
+  display: block;
+
+  margin: 15px 0 0 0;
+
+  color: var(--color-red);
+
+  font-weight: 600;
+  text-align: center;
+}

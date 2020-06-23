@@ -1,0 +1,133 @@
+/***** Sidebar menu *****/
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background: #1f1f1f;
+  color: var(--color-red);
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  position: relative;
+
+  flex-basis: 250px;
+}
+#sidebar .sidebar-content {
+  position: fixed;
+  min-width: 250px;
+}
+#sidebar .sidebar-menu {
+  padding: 0 25px 25px 25px;
+}
+#sidebar.active {margin-left: -250px;}
+#sidebar.active .custom-menu {margin-right: -50px;}
+#sidebar .title {
+  margin-bottom: 20px;
+  font-weight: 500;
+  color: #fff;
+  background: #373737;
+  padding: 10px 25px;
+  height: 60px;
+  font-size: 1.5rem;
+  line-height: 40px;
+}
+#sidebar .title span {
+  color: var(--color-red);
+}
+#sidebar ul {
+  padding: 0;
+  list-style-type: none;
+}
+#sidebar ul li {font-size: 16px;}
+#sidebar ul li a {
+  padding: 10px 0;
+  display: block;
+  color: #fff;
+}
+#sidebar ul li a:after {
+    content: "";
+
+    display: block;
+    width: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+
+    margin-top: 10px;
+}
+#sidebar ul li a:hover {
+  color: var(--color-red);
+  text-decoration: none;
+}
+#sidebar ul li.active > a {
+  background: transparent;
+  color: var(--color-red);
+}
+
+@media (max-width: 991.98px) {
+
+  #sidebar {margin-left: -250px;}
+  #sidebar.active {margin-left: 0;}
+  #sidebar .custom-menu {
+    margin-right: -50px !important;
+    top: 10px !important;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+
+  #sidebar {
+    position: fixed;
+    height: 100%;
+    z-index: 9;
+  }
+  #sidebar.open {margin-left: 0 !important;}
+
+}
+
+#sidebar .custom-menu {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  right: -45px;
+  margin-right: -20px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sidebar .custom-menu {
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
+  }
+}
+
+#sidebar .custom-menu .btn {
+  width: 40px;
+  height: 40px;
+}
+
+/***** Content Header *****/
+
+#content .header {
+  background: #454444;
+  padding: 10px 25px;
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#content .header .title {
+  font-weight: 700;
+  color: #fff;
+}
+#content .header .title span {
+  color: var(--color-red);
+}
+
+#content .logout a {
+  color: #e7e7e7;
+  text-decoration: none;
+}

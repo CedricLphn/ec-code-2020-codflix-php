@@ -1,0 +1,59 @@
+/**********
+* Home page rules
+**********/
+
+.media-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    margin-bottom: 40px;
+}
+
+.media-list .item {
+    flex-basis: 24%;
+    margin: 4px;
+
+    background: #1f1f1f;
+
+    padding-bottom: 25px;
+}
+
+.media-list .item .video {
+    width: 100%;
+}
+
+.media-list .item .video iframe {
+    width: 100%;
+}
+
+.media-list .item .title {
+    color: #fff;
+    font-weight: bold;
+
+    padding: 8px 20px;
+    text-align: center;
+}
+.media-list .item .title:after {
+    content: "";
+    display: block;
+    width: 20px;
+
+    border-bottom: 1px solid var(--color-red);
+    margin: 10px auto 0 auto;
+}
+
+.media-list .item:hover {
+    text-decoration: none;
+}
+
+.media-list .item .summary {
+    color: #fff;
+    padding: 8px 20px;
+
+}
+
+@media screen and (max-width: 768px) {
+    .media-list .item {
+        flex-basis: 100%;
+    }
+}

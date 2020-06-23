@@ -1,0 +1,54 @@
+/**********
+* Auth pages rules
+**********/
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  height: 100%;
+}
+
+.auth-container h1 {
+  color: #fff;
+  font-weight: bold;
+  font-size: 4.5rem;
+  text-align: center;
+}
+
+.auth-container h2 {
+  margin: 0 0 10px 0;
+
+  text-align: center;
+
+  color: var(--color-red);
+}
+
+.auth-container h2 span {
+  color: #000;
+}
+
+.auth-container h3 {
+  margin: 0 0 60px 0;
+  font-size: 1rem;
+  text-transform: uppercase;
+
+  text-align: center;
+
+  color: var(--color-gray);
+}
+
+.auth-container form, .auth-container .welcome {
+  width: 50%;
+  margin: 0 auto 0 auto;
+}
+
+.auth-container .welcome {
+  text-align: center;
+}
+
+.auth-container .btn {
+  color: #fff;
+}
