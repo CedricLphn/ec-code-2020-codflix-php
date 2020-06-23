@@ -2,7 +2,7 @@
 
 require_once( 'database.php' );
 
-class Media {
+class Media extends CoreController {
 
   protected $id;
   protected $genre_id;
@@ -14,10 +14,20 @@ class Media {
   protected $trailer_url;
 
   public function __construct( $media ) {
+    $this->hydrate($media);
+  }
 
-    $this->setId( isset( $media->id ) ? $media->id : null );
-    $this->setGenreId( $media->genre_id );
-    $this->setTitle( $media->title );
+  /***************************
+  * -------- HYDATE- ---------
+  ***************************/
+
+  public function hydrate($data) {
+    foreach($data as $key => $value) {
+      $method = "set".str_replace('_', '', ucfirst($key));
+      if(method_exists($this, $method)) {
+        $this->$method($value);
+      }
+    }
   }
 
   /***************************
@@ -46,6 +56,14 @@ class Media {
 
   public function setReleaseDate( $release_date ) {
     $this->release_date = $release_date;
+  }
+
+  public function setSummary( $summary ) {
+    $this->summary = $summary;
+  }
+
+  public function setTrailerUrl( $trailer ) {
+    $this->trailer_url = $trailer;
   }
 
   /***************************
@@ -93,7 +111,8 @@ class Media {
     // Open database connection
     $db   = init_db();
 
-    $req  = $db->prepare( "SELECT * FROM media WHERE title = ? ORDER BY release_date DESC" );
+
+    $req  = $db->prepare( "SELECT * FROM media WHERE title LIKE ? ORDER BY release_date DESC" );
     $req->execute( array( '%' . $title . '%' ));
 
     // Close databse connection
@@ -102,5 +121,22 @@ class Media {
     return $req->fetchAll();
 
   }
+
+  public static function getMediaById($id) {
+    if(!is_numeric($id))
+      throw new Exception("getMediaById : the id must be numeric");
+
+    $db = init_db();
+
+    $req = $db->prepare("SELECT media.*, genre.name AS genre FROM media  
+    INNER JOIN genre
+    ON genre_id = genre.id
+    WHERE media.id = ?");
+    $req->execute([$id]);
+
+    $db = null;
+    return $req->fetch(PDO::FETCH_ASSOC);
+  }
+
 
 }

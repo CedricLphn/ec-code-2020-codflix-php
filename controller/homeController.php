@@ -10,6 +10,8 @@ function homePage() {
 
   $user_id = isset( $_SESSION['user_id'] ) ? $_SESSION['user_id'] : false;
 
+  var_dump($user_id);
+
   if( $user_id ):
 
     $user_data  = User::getUserById( $user_id );
