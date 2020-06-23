@@ -1,6 +1,6 @@
 <?php
 
-require_once( 'controller/coreController.php' );
+require_once( 'model/CoreModel.php' );
 require_once( 'controller/homeController.php' );
 require_once( 'controller/loginController.php' );
 require_once( 'controller/signupController.php' );

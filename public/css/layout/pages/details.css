@@ -1,0 +1,20 @@
+.serie-season {
+    border: 1px solid #373737;
+
+}
+.serie-season > .title {
+    background-color: #373737;
+    color: white;
+    padding: 20px;
+}
+
+.serie-episode {
+    background-color: #E9ECEF;
+    font-size: large;
+    padding: 10px;
+
+}
+
+.serie-detail {
+    padding: 10px;
+}

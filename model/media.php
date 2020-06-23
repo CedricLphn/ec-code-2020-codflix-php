@@ -2,7 +2,7 @@
 
 require_once( 'database.php' );
 
-class Media extends CoreController {
+class Media extends CoreModel {
 
   protected $id;
   protected $genre_id;
@@ -135,7 +135,14 @@ class Media extends CoreController {
     $req->execute([$id]);
 
     $db = null;
-    return $req->fetch(PDO::FETCH_ASSOC);
+    $fetch = $req->fetch(PDO::FETCH_ASSOC);
+
+    if($fetch) {
+      return $fetch;
+    }else {
+      throw new Exception("Media not found");
+    }
+    
   }
 
 

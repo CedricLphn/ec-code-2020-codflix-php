@@ -1,6 +1,6 @@
 <?php
 
-class CoreController {
+class CoreModel {
     protected function hydrate($data) {
         foreach($data as $key => $value) {
           $method = "set".str_replace('_', '', ucfirst($key));

@@ -1,6 +1,7 @@
 <?php
 
 require_once( 'model/media.php' );
+require_once( 'SerieController.php' );
 
 /***************************
 * ----- LOAD HOME PAGE -----
@@ -25,8 +26,12 @@ function showMedia() {
 
   if($id && is_numeric($id)) {
     
-    $data = Media::getMediaById($id);
-
+    try {
+      $data = Media::getMediaById($id);
+    }catch(Exception $e) {
+      header('Location: index.php');
+    }
+    
     $md = new stdClass();
     foreach($data as $key => $value) {
       $md->$key = $value;
@@ -34,6 +39,11 @@ function showMedia() {
     
 
     $media = new Media($md);
+
+    if($media->getType() == "Serie") {
+      $serie = getSerieBySeason($media);
+      CoreModel::dd($serie);
+    }
 
 
     require('view/mediaView.php');
