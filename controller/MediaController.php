@@ -42,7 +42,6 @@ function showMedia() {
 
     if($media->getType() == "Serie") {
       $serie = getSerieBySeason($media);
-      CoreModel::dd($serie);
     }
 
 

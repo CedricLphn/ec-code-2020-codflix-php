@@ -14,5 +14,3 @@ function getSerieBySeason($media) {
     return $serie;
 
 }
-
-?>

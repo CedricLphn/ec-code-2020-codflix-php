@@ -27,14 +27,14 @@ if($media->getType() == "Serie") {
             Episode <?= $episode['episode']; ?> : <?= $episode['title']; ?>
         </span>
         <span class="text-right" style="float:right">
-            <?= $episode['duree']; ?> MIN A MODIFIER
+            <?= ($episode['duree'] / 60 < 60) ? strftime("%M min", $episode['duree']) :strftime("%Hh et %M min", $episode['duree']); ?>
         </span>
     </div>
     <div class="serie-detail">
         <p><?= $episode['description'] ?></p>
         <p>
             <div class="text-right">
-                <button type="button" class="btn btn-danger"><i class="fas fa-play"></i> Play</button>
+                <a class="btn btn-danger text-white" href="<?= "?action=watch&media=".$media->getId()."&id=".$episode["id"]; ?>"><i class="fas fa-play"></i> Play</a>
 
             </div>
         </p>
