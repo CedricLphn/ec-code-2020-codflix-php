@@ -19,7 +19,7 @@
             <div class="video">
                 <div>
                     <iframe allowfullscreen="" frameborder="0"
-                            src="<?= $media['trailer_url']; ?>" ></iframe>
+                            src="<?= $media['trailer_url'].'?autoplay=1'?>" ></iframe>
                 </div>
             </div>
             <div class="title"><?= $media['title']; ?></div>

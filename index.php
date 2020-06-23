@@ -1,10 +1,20 @@
 <?php
 
 require_once( 'model/CoreModel.php' );
-require_once( 'controller/homeController.php' );
-require_once( 'controller/loginController.php' );
-require_once( 'controller/signupController.php' );
-require_once( 'controller/mediaController.php' );
+
+/**************************
+* --- AUTOLOAD CONTROLLER---
+***************************/
+$directory = "controller/";
+if(is_dir($directory)) {
+  $scan = scandir($directory);
+  unset($scan[0], $scan[1]); //unset . and ..
+  foreach($scan as $file) {
+          if(strpos($file, 'Controller.php') !== false) {
+              require_once($directory."/".$file);
+          }
+  }
+}
 
 /**************************
 * ----- HANDLE ACTION -----
@@ -25,6 +35,10 @@ if ( isset( $_GET['action'] ) ):
 
       signupPage();
 
+    break;
+
+    case 'watch':
+      watchPage();
     break;
 
     case 'logout':
