@@ -40,9 +40,15 @@ function showMedia() {
 
     $media = new Media($md);
 
+    $time_total = $media->getDuration();
+
     if($media->getType() == "Serie") {
-      $serie = getSerieBySeason($media);
+      $data = serie::getSeriesByMediaId($media->getId());
+      $serie = getEpisodesBySeason($data);
+      $time_total = getTotalDuration($data);
     }
+
+    $time_total = ($time_total / 60 < 60) ? strftime("%M min", $time_total) :strftime("%Hh%M", $time_total);
 
 
     require('view/mediaView.php');

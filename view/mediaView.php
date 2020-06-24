@@ -6,14 +6,18 @@
         <div class="text-center">
             <span class="badge badge-pill badge-primary"><?= $media->getType(); ?></span>
             <span class="badge badge-pill badge-primary"><?= $md->genre; ?></span>
+            <span class="badge badge-pill badge-primary"><?= $time_total; ?></span>
         </div>
-
+        <div class="text-center">
+            <a class="my-4 btn btn-danger btn-lg" href="?action=watch&media=<?= $media->getId(); ?>" role="button"><i class="fas fa-film"></i> Voir la bande annonce</a>
+        </div>
     </div>
 </div>
 <p class="lead"><?= $media->getSummary(); ?></p>
 <?php
 if($media->getType() == "Serie") {
     foreach($serie as $key => $element) {
+        
 ?>
 <div class="serie-season">
     <div class="title">
@@ -27,7 +31,7 @@ if($media->getType() == "Serie") {
             Episode <?= $episode['episode']; ?> : <?= $episode['title']; ?>
         </span>
         <span class="text-right" style="float:right">
-            <?= ($episode['duree'] / 60 < 60) ? strftime("%M min", $episode['duree']) :strftime("%Hh et %M min", $episode['duree']); ?>
+            <?= ($episode['duration'] / 60 < 60) ? strftime("%M min", $episode['duration']) :strftime("%Hh et %M min", $episode['duration']); ?>
         </span>
     </div>
     <div class="serie-detail">
@@ -35,7 +39,6 @@ if($media->getType() == "Serie") {
         <p>
             <div class="text-right">
                 <a class="btn btn-danger text-white" href="<?= "?action=watch&media=".$media->getId()."&id=".$episode["id"]; ?>"><i class="fas fa-play"></i> Play</a>
-
             </div>
         </p>
     </div>

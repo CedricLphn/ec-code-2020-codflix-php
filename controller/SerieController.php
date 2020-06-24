@@ -3,14 +3,22 @@
 require_once( 'model/serie.php' );
 
 
-function getSerieBySeason($media) {
-    $md = serie::getSeriesByMediaId($media->getId());
+function getEpisodesBySeason($media) {
     $serie = [];
 
-    foreach($md as $element => $key) {
+    foreach($media as $element => $key) {
             $serie[$key["season"]][$element] = $key;
     }
 
     return $serie;
 
+}
+
+function getTotalDuration($data) {
+    $total = 0;
+    foreach($data as $key => $element) {
+        $total += $element["duration"];
+    }
+
+    return $total;
 }

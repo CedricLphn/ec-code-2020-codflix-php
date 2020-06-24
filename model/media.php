@@ -12,6 +12,7 @@ class Media extends CoreModel {
   protected $release_date;
   protected $summary;
   protected $trailer_url;
+  protected $duration;
 
   public function __construct( $media ) {
     $this->hydrate($media);
@@ -53,6 +54,11 @@ class Media extends CoreModel {
     $this->trailer_url = $trailer;
   }
 
+  public function setDuration($duration)
+  {
+      $this->duration = $duration;
+  }
+
   /***************************
   * -------- GETTERS ---------
   ***************************/
@@ -87,6 +93,11 @@ class Media extends CoreModel {
 
   public function getTrailerUrl() {
     return $this->trailer_url;
+  }
+
+  public function getDuration()
+  {
+      return $this->duration;
   }
 
   /***************************

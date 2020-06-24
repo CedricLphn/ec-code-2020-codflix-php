@@ -8,7 +8,7 @@ class serie extends CoreModel
     protected $episode;
     protected $title;
     protected $summary;
-    protected $duree;
+    protected $duration;
     protected $media_url;
     protected $media_title;
     protected $type;
@@ -40,9 +40,9 @@ class serie extends CoreModel
     {
         $this->episode = $episode;
     }
-    public function setDuree($duree)
+    public function setDuration($duration)
     {
-        $this->duree = $duree;
+        $this->duration = $duration;
     }
     
     public function setSummary($summary)
@@ -103,9 +103,9 @@ class serie extends CoreModel
     }
 
 
-    public function getDuree()
+    public function getDuration()
     {
-        return $this->duree;
+        return $this->duration;
     }
 
     public function getMediaUrl()
