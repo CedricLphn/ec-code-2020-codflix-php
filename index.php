@@ -27,6 +27,7 @@ if ( isset( $_GET['action'] ) ):
     case 'login':
 
       if ( !empty( $_POST ) ) login( $_POST );
+      elseif( !empty($_GET['code'] ) ) activation_code($_GET['code']);
       else loginPage();
 
     break;

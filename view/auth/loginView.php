@@ -30,9 +30,9 @@
                 </div>
               </div>
             </div>
-
-            <span class="error-msg">
+            <span class="error-msg <?= isset($success_msg) ? 'text-success' : '' ?>">
               <?= isset( $error_msg ) ? $error_msg : null; ?>
+              <?= isset( $success_msg ) ? $success_msg : null; ?>
             </span>
           </form>
         </div>

@@ -113,7 +113,7 @@ class User {
     // Open database connection
     $db   = init_db();
 
-    $req  = $db->prepare( "SELECT * FROM user WHERE id = ?" );
+    $req  = $db->prepare( "SELECT * FROM user WHERE id = ? AND activation = NULL" );
     $req->execute( array( $id ));
 
     // Close databse connection
@@ -166,6 +166,26 @@ class User {
   private function generateKeyActivation() {
     return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 
     ceil(10/strlen($x)) )),1,10);
+
+  }
+
+  public static function activateAccount($key) {
+    $db = init_db();
+
+    $req  = $db->prepare( "SELECT * FROM user WHERE activation = ?" );
+    $req->execute( array( $key ));
+
+    if( $req->rowCount() == 0 ) throw new Exception( "Le code d'activation est invalide ou inexistant." );
+
+    $req->closeCursor();
+
+    try {
+      $req  = $db->prepare( "UPDATE user set activation = NULL WHERE activation = ?" );
+      $req->execute( array( $key ));
+
+    }catch(Exception $e) {
+      throw new Exception("Problème lors de l'activation du compte.");
+    }
 
   }
 
