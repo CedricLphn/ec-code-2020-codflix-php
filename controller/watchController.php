@@ -24,7 +24,6 @@ function watchPage() {
         }
         
         $media = (!$episode) ? new media($media_std) : new serie($media_std);
-        CoreModel::dd($media);
         require_once('view/watchView.php');
 
     }else {

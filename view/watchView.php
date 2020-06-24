@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
 <div class="navbar" style="clear: both;">
-  <span style="float:left;"> <a class="btn btn-danger text-white" href=""><i class="fas fa-chevron-left"></i></a></span>
+  <span style="float:left;"> <a class="btn btn-danger text-white" href="?media=<?= htmlentities($_GET['media']) ?>"><i class="fas fa-chevron-left"></i></a></span>
   <span>
     <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalCenter">
       <?= ($type == "movie") ? $media->getTitle() . " - Trailer" : $media->getMediaTitle(); ?>
