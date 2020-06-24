@@ -1,5 +1,6 @@
 <?php
 
+
 class history extends CoreModel
 {
 
@@ -93,7 +94,9 @@ class history extends CoreModel
     {
         $db = init_db();
 
-        $req = $db->prepare("SELECT history.start_date, 
+        $req = $db->prepare("SELECT 
+        history.id,
+        history.start_date, 
         history.finish_date,
         history.watch_duration,
         media.title AS media_title, 
@@ -110,4 +113,19 @@ class history extends CoreModel
 
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function deleteUserHistory($user_id) {
+        $db = init_db();
+
+        try {
+            $req = $db->prepare("DELETE FROM history WHERE user_id = ?");
+            $req->execute(array($user_id));
+        }catch(Exception $e) {
+            return $e->getMessage();
+        }
+
+
+        return $req->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

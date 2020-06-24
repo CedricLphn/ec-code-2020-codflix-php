@@ -15,7 +15,7 @@
             <th scope="col">Action</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="historyContent">
         <?php foreach ($history as $media) : ?>
             <tr>
                 <th scope="row"><?= $media["media_title"] ?><?= $media["serie_title"] != NULL ? ': Episode ' . $media["episode"] . ' saison ' . $media["season"] : ''; ?></th>
@@ -26,13 +26,11 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+<?php if(count($history)): ?>
 <div class="text-center">
-    <button type="button" class="btn btn-danger text-white" data-toggle="modal" data-target="#staticBackdrop"><i class="fas fa-trash-alt"></i> Supprimer mon historique</button>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-        Launch static backdrop modal
-    </button>
+    <button type="button" class="btn btn-danger text-white" id="deleteAllBtn" data-toggle="modal" data-target="#staticBackdrop"><i class="fas fa-trash-alt"></i> Supprimer mon historique</button>
 </div>
-
+<?php endif; ?>
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -67,6 +65,15 @@
 
     $("#confirm").click(() => {
         $("#confirm").prop('disabled', true);
-        //$('#staticBackdrop').modal('hide');
+
+        $.ajax({
+            url: '/api/?action=history&query=deleteAll'
+        }).done(() => {
+            $("#historyContent").remove();
+            $('#staticBackdrop').modal('hide');
+            $("#deleteAllBtn").hide();
+            
+        })
+
     })
 </script>
