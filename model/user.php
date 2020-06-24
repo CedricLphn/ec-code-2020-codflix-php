@@ -41,10 +41,9 @@ class User {
 
     if( $password_confirm && $password != $password_confirm ):
       throw new Exception( 'Vos mots de passes sont différents' );
-    elseif(strlen($password) < 3):
+    elseif($password_confirm && strlen($password) < 3):
       throw new Exception( 'Le mot de passe doit faire plus de 3 caractères' );
     endif;
-
     $this->password = $this->hash($password);
   }
 
@@ -145,16 +144,15 @@ class User {
    *
    * @return string generated sha256 password
    */
-  private function hash() {
+  private function hash($password) {
     $shifted_email = explode("@", $this->email);
     $shifted_email[0] = substr($shifted_email[0], 0, 3);
     $shifted_email[1] = substr($shifted_email[1], 0, 3);
     $shifted_email = implode($shifted_email);
 
-    $password = substr($this->password, 0,3);
+    $str_password = substr($password, 0,3);
 
-    $salt = $shifted_email.$this->password.$password;
-
+    $salt = $shifted_email.$password.$str_password;
     return hash('sha256', $salt);
   }
 
