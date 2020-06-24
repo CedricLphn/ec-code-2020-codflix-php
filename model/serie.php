@@ -7,15 +7,15 @@ class serie extends CoreModel
     protected $season;
     protected $episode;
     protected $title;
-    protected $description;
+    protected $summary;
     protected $duree;
     protected $media_url;
+    protected $media_title;
+    protected $type;
     
     public function __construct($media)
     {
-        $serie = $this->getSerieByMediaId($media->getId());
-        CoreModel::dd($serie);
-        $this->hydrate($serie);
+        $this->hydrate($media);
     }
     
     /**
@@ -45,14 +45,24 @@ class serie extends CoreModel
         $this->duree = $duree;
     }
     
-    public function setDescription($description)
+    public function setSummary($summary)
     {
-        $this->description = $description;
+        $this->summary = $summary;
     }
     
     public function setMediaUrl($media_url)
     {
         $this->media_url = $media_url;
+    }
+
+    public function setMediaTitle($media_title)
+    {
+        $this->media_title = $media_title;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
     /**
@@ -82,10 +92,14 @@ class serie extends CoreModel
         return $this->title;
     }
 
+    public function getMediaTitle() {
+        return $this->media_title;
+    }
 
-    public function getDescription()
+
+    public function getSummary()
     {
-        return $this->description;
+        return $this->summary;
     }
 
 
@@ -94,19 +108,52 @@ class serie extends CoreModel
         return $this->duree;
     }
 
-    public function getMedia_url()
+    public function getMediaUrl()
     {
         return $this->media_url;
     }
 
+    public function getType()
+    {
+        return $this->type;
+    }
+
     
-    public static function getSerieByMediaId($media_id) {
+    public static function getSeriesByMediaId($media_id) {
+
+        if(!is_numeric($media_id))
+            throw new Exception("id must be numeric");
+
         $db = init_db();
 
-        $req = $db->prepare("SELECT * FROM serie WHERE media_id = ?");
+        $req = $db->prepare("SELECT serie.*
+        FROM serie
+        WHERE media_id = ?");
         $req->execute([$media_id]);
 
+        if($req->rowCount() <= 0)
+            throw new Exception("Serie not found");
+
         return $req->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public static function getSeriebyId($id) {
+        if(!is_numeric($id))
+            throw new Exception("id must be numeric");
+
+        $db = init_db();
+
+        $req = $db->prepare("SELECT serie.*, media.title AS media_title, media.type FROM serie
+        INNER JOIN media
+        ON serie.media_id = media.id
+        WHERE serie.id = ?");
+        $req->execute([$id]);
+
+        if($req->rowCount() <= 0)
+            throw new Exception("Serie not found");
+
+        return $req->fetch(PDO::FETCH_ASSOC);
 
     }
 

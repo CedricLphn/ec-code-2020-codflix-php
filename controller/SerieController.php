@@ -4,7 +4,7 @@ require_once( 'model/serie.php' );
 
 
 function getSerieBySeason($media) {
-    $md = serie::getSerieByMediaId($media->getId());
+    $md = serie::getSeriesByMediaId($media->getId());
     $serie = [];
 
     foreach($md as $element => $key) {

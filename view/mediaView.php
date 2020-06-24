@@ -31,7 +31,7 @@ if($media->getType() == "Serie") {
         </span>
     </div>
     <div class="serie-detail">
-        <p><?= $episode['description'] ?></p>
+        <p><?= $episode['summary'] ?></p>
         <p>
             <div class="text-right">
                 <a class="btn btn-danger text-white" href="<?= "?action=watch&media=".$media->getId()."&id=".$episode["id"]; ?>"><i class="fas fa-play"></i> Play</a>

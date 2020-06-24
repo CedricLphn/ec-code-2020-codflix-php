@@ -38,7 +38,8 @@ if ( isset( $_GET['action'] ) ):
     break;
 
     case 'watch':
-      watchPage();
+      if(!$_SESSION['user_id']) homePage();
+      else watchPage();
     break;
 
     case 'logout':
