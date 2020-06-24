@@ -7,6 +7,7 @@ class User {
   protected $id;
   protected $email;
   protected $password;
+  protected $key;
 
   public function __construct( $user = null ) {
 
@@ -15,6 +16,7 @@ class User {
       $this->setEmail( $user->email );
       $this->setPassword( $user->password, isset( $user->password_confirm ) ? $user->password_confirm : false );
     endif;
+    
   }
 
   /***************************
@@ -27,7 +29,7 @@ class User {
 
   public function setEmail( $email ) {
 
-    if ( !filter_var($email, FILTER_VALIDATE_EMAIL)):
+    if ( !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) < 3):
       throw new Exception( 'Email incorrect' );
     endif;
 
@@ -39,9 +41,15 @@ class User {
 
     if( $password_confirm && $password != $password_confirm ):
       throw new Exception( 'Vos mots de passes sont différents' );
+    elseif(strlen($password) < 3):
+      throw new Exception( 'Le mot de passe doit faire plus de 3 caractères' );
     endif;
 
-    $this->password = $password;
+    $this->password = $this->hash($password);
+  }
+
+  public function setKey($key) {
+    $this->key = $key;
   }
 
   /***************************
@@ -60,6 +68,10 @@ class User {
     return $this->password;
   }
 
+  public function getKey() {
+    return $this->key;
+  }
+
   /***********************************
   * -------- CREATE NEW USER ---------
   ************************************/
@@ -75,13 +87,16 @@ class User {
 
     if( $req->rowCount() > 0 ) throw new Exception( "Email ou mot de passe incorrect" );
 
+    $this->setKey($this->generateKeyActivation()); # For generate a key activation
+
     // Insert new user
     $req->closeCursor();
 
-    $req  = $db->prepare( "INSERT INTO user ( email, password ) VALUES ( :email, :password )" );
+    $req  = $db->prepare( "INSERT INTO user ( email, password, activation ) VALUES ( :email, :password, :activation )" );
     $req->execute( array(
       'email'     => $this->getEmail(),
-      'password'  => $this->getPassword()
+      'password'  => $this->getPassword(),
+      'activation'       => $this->getKey()
     ));
 
     // Close databse connection
@@ -123,6 +138,35 @@ class User {
     $db   = null;
 
     return $req->fetch();
+  }
+
+  /**
+   * hash a password with salt & sha256
+   *
+   * @return string generated sha256 password
+   */
+  private function hash() {
+    $shifted_email = explode("@", $this->email);
+    $shifted_email[0] = substr($shifted_email[0], 0, 3);
+    $shifted_email[1] = substr($shifted_email[1], 0, 3);
+    $shifted_email = implode($shifted_email);
+
+    $password = substr($this->password, 0,3);
+
+    $salt = $shifted_email.$this->password.$password;
+
+    return hash('sha256', $salt);
+  }
+
+  /**
+   * Generate random caracter for email confirmation
+   *
+   * @return string 10 caracters
+   */
+  private function generateKeyActivation() {
+    return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 
+    ceil(10/strlen($x)) )),1,10);
+
   }
 
 }
