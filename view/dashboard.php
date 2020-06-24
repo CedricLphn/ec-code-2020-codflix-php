@@ -19,7 +19,7 @@
         <div class="sidebar-menu">
           <ul>
             <li class="<?= $_GET['action'] ?? 'active' ?>"><a href="/">Médias</a></li>
-            <li class="<?= isset($_GET['action']) && $_GET['action'] == 'history' ?? 'active' ?>"><a href="?action=history">Mon historique</a></li>
+            <li class="<?= (isset($_GET['action']) && $_GET['action'] == 'history') ? 'active' : '' ?>"><a href="?action=history">Mon historique</a></li>
             <li><a href="#">Nous contacter</a></li>
             <li><a href="index.php?action=logout">Me déconnecter</a></li>
           </ul>
@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    <script src="public/lib/jquery/js/jquery-3.5.0.min"></script>
+    <script src="public/lib/jquery/js/jquery-3.5.0.min.js"></script>
     <script src="public/lib/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="public/js/script.js"></script>

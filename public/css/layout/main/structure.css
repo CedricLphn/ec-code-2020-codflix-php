@@ -15,6 +15,10 @@
   background-image: url('../../../img/landscape.jpg');
 }
 
+.cover {
+  background-size: cover;
+}
+
 .bg-white {
   background-color: #fff;
 }

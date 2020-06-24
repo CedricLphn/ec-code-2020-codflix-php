@@ -43,6 +43,11 @@ if ( isset( $_GET['action'] ) ):
       else watchPage();
     break;
 
+    case 'history':
+      if(!$_SESSION['user_id']) homePage();
+      else historyPage();
+    break;
+
     case 'logout':
 
       logout();
