@@ -1,3 +1,4 @@
+<?php CoreModel::dd($history); ?>
 <?php ob_start(); ?>
 <div class="navbar" style="clear: both;">
   <span style="float:left;"> <a class="btn btn-danger text-white" href="?media=<?= htmlentities($_GET['media']) ?>"><i class="fas fa-chevron-left"></i></a></span>
@@ -32,9 +33,10 @@
 </div>
 
 <?php $content = ob_get_clean(); ?>
-<script>
-  $('#myModal').on('shown.bs.modal', function() {
-    $('#myInput').trigger('focus')
-  })
-</script>
 <?php require('base.php'); ?>
+<script>
+  var mediaId = <?= $history->getMediaId(); ?>;
+  var serieId =  "<?= ($history->getSerieId()) ? $history->getSerieId() : 'false'; ?>"
+  var videoId = '<?= $type == "movie" ? $media->getTrailerUrl() : $media->getMediaUrl(); ?>';
+</script>
+<script src="public/js/watcher.js"></script>
