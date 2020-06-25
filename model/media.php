@@ -104,6 +104,26 @@ class Media extends CoreModel {
   * -------- GET LIST --------
   ***************************/
 
+  public static function filterMediasByYear( $year, $operator ) {
+
+    // Open database connection
+    $db   = init_db();
+
+    $sql = "SELECT media.*
+    FROM media 
+    WHERE YEAR(media.release_date) $operator ?
+    ORDER BY media.release_date DESC";
+
+    $req  = $db->prepare( $sql );
+    $req->execute( array( $year ));
+
+    // Close databse connection
+    $db   = null;
+
+    return $req->fetchAll();
+
+  }
+
   public static function filterMedias( $title ) {
 
     // Open database connection
