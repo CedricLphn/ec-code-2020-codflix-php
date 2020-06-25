@@ -94,13 +94,15 @@
                         <img src="public/img/disuasion.jpg" width="40%" />
                     </div>
                     <p class="card-text">Quitter Cod'Flix, c'est quitter une famille. Chaque fois que tu y songe, pense à ce chat qui risque sa vie pour que tu restes. Nous avons vécu beaucoup de belles choses, ce chat t'apprécie énormement mais nous comprenons ton choix...</p>
-                    <div class="form-group">
-                        <label for="delete_account">Mot de passe... pour une dernière fois.</label>
-                        <input type="email" class="form-control" id="delete_account">
-                    </div>
-                    <div class="text-right">
-                        <button class="btn btn-danger">Supprimer mon compte</button>
-                    </div>
+                    <form id="email" method="post" action="index.php?action=profil" class="custom-form">
+                        <div class="form-group">
+                            <label for="delete_account">Mot de passe... pour une dernière fois.</label>
+                            <input type="password" class="form-control" name="delete_account" id="delete_account">
+                        </div>
+                        <div class="text-right">
+                            <input type="hidden" name="action" value="delete" /><input type="submit" class="btn btn-danger text-right" name="Valider" value="Supprimer mon compte" />
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

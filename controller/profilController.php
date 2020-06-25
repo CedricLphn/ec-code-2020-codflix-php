@@ -9,8 +9,6 @@ function profilPage($post = null) {
     
     $user = user::getUserById($user_id);
 
-    CoreModel::dd($post);
-
     if(isset($post["action"])):
         $action = htmlentities($post["action"]);
     else:
@@ -23,6 +21,9 @@ function profilPage($post = null) {
         break;
         case 'password':
             changePassword($post);
+        break;
+        case 'delete':
+            deleteAccount($post); # Good bye my friend
         break;
         default:
             require('view/profilView.php');
@@ -65,8 +66,6 @@ function changePassword($post) {
     $user_id = htmlentities($_SESSION["user_id"]);
     $user_info = user::getUserById($user_id);
 
-    CoreModel::dd($user_info);
-
     try {
         
         $login = new stdClass();
@@ -76,8 +75,6 @@ function changePassword($post) {
 
 
         $user = new User($login);
-
-        CoreModel::dd($user->getPassword());
 
         if($user_info["password"] != $user->getPassword())
             throw new Exception("Le mot de passe est incorrect");
@@ -95,6 +92,35 @@ function changePassword($post) {
     $user = user::getUserById($user_id);
     require('view/profilView.php');
 
+}
+
+function deleteAccount($post) {
+    $user_id = htmlentities($_SESSION["user_id"]);
+    $user_info = user::getUserById($user_id);
+    
+    
+    $login = new stdClass();
+    $login->id = $user_id;
+    $login->email = $user_info["email"];
+    $login->password = $post["delete_account"];
+    
+    
+    try {
+        $user = new User($login);
+
+        if($user_info["password"] != $user->getPassword())
+            throw new Exception("Le mot de passe ne correspond pas");
+        
+        $user->deleteAccount();
+
+        header('Location: index.php?action=logout');
+        
+    }catch(Exception $e) {
+        $error_msg = $e->getMessage();
+    }
+    
+    $user = user::getUserById($user_id);
+    require('view/profilView.php');
 }
 
 ?>

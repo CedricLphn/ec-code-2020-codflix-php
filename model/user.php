@@ -213,4 +213,19 @@ class User {
     $db = null;
   }
 
+
+  public function deleteAccount() {
+    
+    $db = init_db();
+
+    $req = $db->prepare("DELETE FROM user WHERE id = :user_id");
+    $req->execute(array(
+      "user_id"    => $this->getId()
+    ));
+
+    $req->closeCursor();
+
+    $db = null;
+  }
+
 }
