@@ -86,11 +86,11 @@ class User {
 
     if( $req->rowCount() > 0 ) throw new Exception( "Email ou mot de passe incorrect" );
 
-    $this->setKey($this->generateKeyActivation()); # For generate a key activation
-
     // Insert new user
     $req->closeCursor();
-
+    
+    $this->setKey($this->generateKeyActivation()); # For generate a key activation
+    
     $req  = $db->prepare( "INSERT INTO user ( email, password, activation ) VALUES ( :email, :password, :activation )" );
     $req->execute( array(
       'email'     => $this->getEmail(),
@@ -112,7 +112,9 @@ class User {
     // Open database connection
     $db   = init_db();
 
-    $req  = $db->prepare( "SELECT * FROM user WHERE id = ? AND activation = NULL" );
+    echo $id;
+
+    $req  = $db->prepare( "SELECT * FROM user WHERE id = ? AND activation IS NULL" );
     $req->execute( array( $id ));
 
     // Close databse connection
@@ -130,7 +132,7 @@ class User {
     // Open database connection
     $db   = init_db();
 
-    $req  = $db->prepare( "SELECT * FROM user WHERE email = ?" );
+    $req  = $db->prepare( "SELECT * FROM user WHERE email = ? AND activation IS NULL" );
     $req->execute( array( $this->getEmail() ));
 
     // Close databse connection
