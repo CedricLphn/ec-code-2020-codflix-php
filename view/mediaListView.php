@@ -7,44 +7,24 @@
                 <input type="search" id="search" name="title" value="<?= $search; ?>" class="form-control"
                        placeholder="Rechercher un film ou une série">
 
-                <button type="submit" class="btn btn-block bg-red">Valider</button>
+                <button type="button" class="btn btn-block bg-red">Valider</button>
             </div>
         </form>
     </div>
 </div>
 
-<div class="media-list">
-    <?php foreach( $medias as $media ): ?>
-        <div class="item">
-            <a class="" href="index.php?media=<?= $media['id']; ?>">
-                <div class="video">
-                    <div>
-                        <iframe allowfullscreen="" frameborder="0"
-                                src="<?= $media['trailer_url'].'?autoplay=1'?>" ></iframe>
-                    </div>
-                    <div class="text-center">
-                    <h5><span class="badge <?= $media['type'] == "Film" ? 'badge-warning': 'badge-info' ?>"><?= $media['type'] ?></span></h5>
-
-                    <?php
-                    if($search):
-                    ?>
-                        <div class="badge badge-pill badge-danger"><?= date_format(date_create($media['release_date']), 'Y') ?></div>
-                        <?php
-                    endif;
-                    ?>
-                    </div>
-                </div>
-                <div class="title">
-                    <?= $media['title']; ?>
-                </div>
-            </a>
-
-        </div>
-        
-    <?php endforeach; ?>
+<div class="media-list" id="results">
+    <?= require('api/searchView.php'); ?>
 </div>
-
 
 <?php $content = ob_get_clean(); ?>
 
 <?php require('dashboard.php'); ?>
+
+<script>
+    $('#search').on('keypress', function (e) {
+        $.ajax(`/api/?action=search&query=${$("#search").val()}`).done((data) => {
+            $("#results").html(data);
+        })
+    });
+</script>
