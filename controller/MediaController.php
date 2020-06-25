@@ -9,7 +9,7 @@ require_once( 'SerieController.php' );
 
 function mediaPage() {
 
-  $search = isset( $_GET['title'] ) ? $_GET['title'] : null;
+  $search = isset( $_GET['title'] ) ? htmlentities($_GET['title']) : null;
   $medias = Media::filterMedias( $search );
 
   require('view/mediaListView.php');
