@@ -110,8 +110,15 @@ class Media extends CoreModel {
     $db   = init_db();
 
 
-    $req  = $db->prepare( "SELECT * FROM media WHERE title LIKE ? ORDER BY release_date DESC" );
-    $req->execute( array( '%' . $title . '%' ));
+    $req  = $db->prepare( "SELECT media.*
+    FROM media 
+    INNER JOIN genre
+    ON media.genre_id = genre.id
+    WHERE media.title LIKE :query
+    OR media.type LIKE :query
+    OR genre.name LIKE :query
+    ORDER BY release_date DESC" );
+    $req->execute( array( 'query' => '%' . $title . '%' ));
 
     // Close databse connection
     $db   = null;

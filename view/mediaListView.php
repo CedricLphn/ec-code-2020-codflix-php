@@ -23,8 +23,16 @@
 
 <script>
     $('#search').on('keypress', function (e) {
-        $.ajax(`/api/?action=search&query=${$("#search").val()}`).done((data) => {
+        if (e.keyCode == 13) {
+        e.preventDefault();
+        }
+        
+        let search = $("#search").val();
+
+        $.ajax(`/api/?action=search&query=${search}`).done((data) => {
             $("#results").html(data);
+        }).fail(() => {
+            $("#results").text("Aucun résultat");
         })
     });
 </script>
