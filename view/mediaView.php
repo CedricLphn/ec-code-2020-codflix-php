@@ -69,8 +69,6 @@
             dataType: 'jsonp',
         })
         .then(function(response) {
-            console.log(response.results);
-            response = response.results[0];
             $("#info").append(`<span class="badge badge-pill badge-primary">${response.vote_average}</span>`)
             $(".jumbotron").css("background-image", `url(http://image.tmdb.org/t/p/original/${response.backdrop_path})`)
             $(".jumbotron").css("background-size", `cover`)
@@ -80,7 +78,6 @@
                     dataType: 'jsonp',
                 })
                 .then(function(credit) {
-                    console.log(credit);
                     for(let i = 0 ; i < 5; i++) {
                         let poster = credit.cast[i].profile_path != null ? `http://image.tmdb.org/t/p/w154/${credit.cast[i].profile_path}` : 'public/img/default.jpg'
                         let html = `
@@ -98,11 +95,6 @@
 
                 });
         });
-
-
-
-
-
 
     function toggle(block_id) {
         $(`#s${block_id}`).slideToggle();
