@@ -149,6 +149,7 @@ class history extends CoreModel
     public static function createHistory($media) {
 
         $start_date = history::toDateString($media->start_date);
+        $serie_id   = isset($media->serie_id) ? $media->serie_id : NULL;
         # $finish_date = (!is_null($this->getFinishDate())) ? $this->toDateString($this->getFinishDate) : NULL;
 
         $db = init_db();
@@ -159,7 +160,7 @@ class history extends CoreModel
         $req->execute(array(
             "user_id" => $media->user_id,
             "media_id" => $media->media_id,
-            "serie_id" => $media->serie_id,
+            "serie_id" => $serie_id,
             "start_date" => $start_date,
         ));
 

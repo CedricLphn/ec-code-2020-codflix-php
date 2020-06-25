@@ -19,24 +19,23 @@ function watchPage() {
             $data = serie::getSeriebyId($episode);
             $type = "serie";
             $history_user->serie_id = $data["id"];
+            $history_data = history::getMediaHistory($history_user->user_id, $history_user->media_id, $history_user->serie_id);
 
         }else {
             // Film OU bande annonce de série
             $media_std->id = $media_id;
             $data = media::getMediaById($media_id);
             $type = "movie";
+            $history_data = history::getMediaHistory($history_user->user_id, $history_user->media_id);
         }
         
         foreach($data as $key => $value) {
             $media_std->$key = $value;
         }
-        
-        $history_data = history::getMediaHistory($history_user->user_id, $history_user->media_id, $history_user->serie_id);
 
         if(!$history_data) {
             history::createHistory($history_user);
         }else {
-            CoreModel::dd($history_data);
             if($history_data["finish_date"])
                 $history_user->finish_date = strtotime($history_data["finish_date"]);
                 
@@ -54,5 +53,3 @@ function watchPage() {
         header('Location: index.php');
     }
 }
-
-?>
