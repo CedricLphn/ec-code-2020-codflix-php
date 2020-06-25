@@ -54,6 +54,13 @@ if ( isset( $_GET['action'] ) ):
 
     break;
 
+    case 'contact':
+      if($_POST): contact( $_POST );
+      else : contactPage();
+      endif;
+    
+    break;
+
   endswitch;
 
 else:

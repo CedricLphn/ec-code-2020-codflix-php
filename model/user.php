@@ -112,8 +112,6 @@ class User {
     // Open database connection
     $db   = init_db();
 
-    echo $id;
-
     $req  = $db->prepare( "SELECT * FROM user WHERE id = ? AND activation IS NULL" );
     $req->execute( array( $id ));
 

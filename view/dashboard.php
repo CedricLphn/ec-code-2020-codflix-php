@@ -20,7 +20,7 @@
           <ul>
             <li class="<?= $_GET['action'] ?? 'active' ?>"><a href="/">Médias</a></li>
             <li class="<?= (isset($_GET['action']) && $_GET['action'] == 'history') ? 'active' : '' ?>"><a href="?action=history">Mon historique</a></li>
-            <li><a href="#">Nous contacter</a></li>
+            <li><a href="index.php?action=contact">Nous contacter</a></li>
             <li><a href="index.php?action=logout">Me déconnecter</a></li>
           </ul>
         </div>
