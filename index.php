@@ -43,6 +43,11 @@ if ( isset( $_GET['action'] ) ):
       else watchPage();
     break;
 
+    case 'profil':
+      if(!$_SESSION['user_id']) homePage();
+      else profilPage();
+    break;
+
     case 'history':
       if(!$_SESSION['user_id']) homePage();
       else historyPage();
