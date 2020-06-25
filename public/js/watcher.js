@@ -38,6 +38,7 @@ function onYouTubeIframeAPIReady() {
 
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
+    event.target.seekTo(currentTime);
     event.target.playVideo();
 }
 
@@ -49,30 +50,25 @@ let sendCurrentTime = false;
 
 var update = setInterval(updateTimestamp, 5000);
 function onPlayerStateChange(event) {
-
-
-    console.log("ohh ca a changé", event)
-    console.log("temps", Math.round(player.getCurrentTime()))
-
     // USER ENDED VIDEO
     if (event.data == YT.PlayerState.ENDED) {
+        console.log("end");
         $.post("/api/?action=history&query=update_timestamp", {
             mediaId: mediaId,
             serieId: serieId,
+            currentTime : 0,
             action: 'done'
-        }).done((data) => console.log(data));
+        });
 
-    }
+        sendCurrentTime = false;
+        clearInterval(update);
 
-    if (event.data == YT.PlayerState.PLAYING) {
+    }else if (event.data == YT.PlayerState.PLAYING) {
         sendCurrentTime = true;
 
-    }
-
-    if (event.data == YT.PlayerState.PAUSED) {
+    }else if (event.data == YT.PlayerState.PAUSED) {
         updateTimestamp();
         sendCurrentTime = false;
-        console.log("pause");
 
     }
 
@@ -89,7 +85,7 @@ function updateTimestamp() {
         serieId: serieId,
         currentTime: Math.round(player.getCurrentTime()),
         action: 'setTime'
-    }).done((data) => console.log(data));
+    });
 
     //if (event.data == YT.PlayerState.PLAYING && !done) {
     //setTimeout(stopVideo, 6000);

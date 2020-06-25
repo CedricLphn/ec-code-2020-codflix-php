@@ -134,7 +134,8 @@ class history extends CoreModel
         return $this->user_id;
     }
 
-    private function toDateString($timestamp) {
+    ## UTILS
+    public static function toDateString($timestamp) {
         if(!is_numeric($timestamp))
             throw new Exception("Timestamp must be numeric");
 
@@ -145,10 +146,9 @@ class history extends CoreModel
 
     }
 
-    public function createHistory() {
+    public static function createHistory($media) {
 
-
-        $start_date = $this->toDateString($this->getStartDate());
+        $start_date = history::toDateString($media->start_date);
         # $finish_date = (!is_null($this->getFinishDate())) ? $this->toDateString($this->getFinishDate) : NULL;
 
         $db = init_db();
@@ -157,9 +157,9 @@ class history extends CoreModel
         VALUES(:user_id, :media_id, :serie_id, :start_date)");
 
         $req->execute(array(
-            "user_id" => $this->getUserId(),
-            "media_id" => $this->getMediaId(),
-            "serie_id" => $this->getSerieId(),
+            "user_id" => $media->user_id,
+            "media_id" => $media->media_id,
+            "serie_id" => $media->serie_id,
             "start_date" => $start_date,
         ));
 
@@ -183,7 +183,7 @@ class history extends CoreModel
         LEFT JOIN serie
         ON history.serie_id = serie.id
         WHERE user_id = ?
-        ORDER BY history.finish_date DESC, history.start_date DESC");
+        ORDER BY history.id DESC, history.watch_duration DESC");
         $req->execute(array($user_id));
 
 
@@ -203,7 +203,7 @@ class history extends CoreModel
         $req->execute($statement);
 
 
-        return $req->fetchAll(PDO::FETCH_ASSOC);
+        return $req->fetch(PDO::FETCH_ASSOC);
     }
 
     public static function deleteUserHistory($user_id) {
@@ -227,16 +227,18 @@ class history extends CoreModel
         if(!$watch->media_id)
             throw new Exception("user_id is required");
 
-        if(!$watch->watch_duration)
-            throw new Exception("watch_duration is required");
-
+        if(!isset($watch->watch_duration))
+            $watch->watch_duration = 0;
+        
         $db = init_db();
         $query = "UPDATE history
-        SET watch_duration = :watch_duration
+        SET watch_duration = :watch_duration".
+        (isset($watch->finish_date) ? ',
+        finish_date = :finish_date' : '')
+        ."
         WHERE user_id = :user_id AND
         media_id = :media_id AND ".
         ($watch->serie_id ? 'serie_id = :serie_id' : 'serie_id IS NULL');
-
 
         $data = array(
             "watch_duration"    =>  $watch->watch_duration,
@@ -244,8 +246,11 @@ class history extends CoreModel
             "media_id"          =>  $watch->media_id,
         );
 
-        if($watch->serie_id)
+        if(isset($watch->serie_id))
             $data["serie_id"] = $watch->serie_id;
+
+        if(isset($watch->finish_date))
+            $data["finish_date"] = $watch->finish_date;
 
         $req = history::getMediaHistory($watch->user_id, 
         $watch->media_id, 

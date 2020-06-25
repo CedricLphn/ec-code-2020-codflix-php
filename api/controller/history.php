@@ -117,6 +117,16 @@ function updateTimestamp($post) {
         }catch(Exception $e) {
             echo $e->getMessage();
         }
+    }else if($watcher->action == "done") {
+        # If user has finished
+        $date = new DateTime();
+        $watcher->finish_date = $date->format("Y-m-d H:i:s");
+        try {
+            history::updateCurrentTime($watcher);
+        }catch(Exception $e) {
+            echo $e->getMessage();
+        }
+
     }
 
 

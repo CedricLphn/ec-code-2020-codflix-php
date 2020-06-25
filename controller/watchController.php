@@ -7,10 +7,10 @@ function watchPage() {
 
         $media_std = new stdClass();
 
-        $history_std = new stdClass();
-        $history_std->user_id = $_SESSION['user_id'];
-        $history_std->media_id = $media_id;
-        $history_std->start_date = time();
+        $history_user = new stdClass();
+        $history_user->user_id = $_SESSION['user_id'];
+        $history_user->media_id = $media_id;
+        $history_user->start_date = time();
         
         
         if($episode){
@@ -18,7 +18,7 @@ function watchPage() {
             $media_std->id = $episode;
             $data = serie::getSeriebyId($episode);
             $type = "serie";
-            $history_std->serie_id = $data["id"];
+            $history_user->serie_id = $data["id"];
 
         }else {
             // Film OU bande annonce de série
@@ -31,12 +31,20 @@ function watchPage() {
             $media_std->$key = $value;
         }
         
-        
-        $history = new history($history_std);
-        
-        if(!history::getMediaHistory($history->getUserId(), $history->getMediaId(), $history->getSerieId())) {
-            $history->createHistory();
+        $history_data = history::getMediaHistory($history_user->user_id, $history_user->media_id, $history_user->serie_id);
+
+        if(!$history_data) {
+            history::createHistory($history_user);
+        }else {
+            CoreModel::dd($history_data);
+            if($history_data["finish_date"])
+                $history_user->finish_date = strtotime($history_data["finish_date"]);
+                
+            $history_user->watch_duration = $history_data["watch_duration"];
         }
+        
+        $history = new history($history_user);
+        
         
         $media = (!$episode) ? new media($media_std) : new serie($media_std);
         
