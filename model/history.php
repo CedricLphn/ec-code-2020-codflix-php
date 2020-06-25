@@ -198,7 +198,7 @@ class history extends CoreModel
         
         if(!is_null($serie_id))
             $statement[count($statement)] = $serie_id;
-
+        
         $req = $db->prepare($query);
         $req->execute($statement);
 
@@ -218,6 +218,51 @@ class history extends CoreModel
 
 
         return true;
+    }
+
+    public static function updateCurrentTime($watch) {
+        if(!$watch->user_id)
+            throw new Exception("user_id is required");
+
+        if(!$watch->media_id)
+            throw new Exception("user_id is required");
+
+        if(!$watch->watch_duration)
+            throw new Exception("watch_duration is required");
+
+        $db = init_db();
+        $query = "UPDATE history
+        SET watch_duration = :watch_duration
+        WHERE user_id = :user_id AND
+        media_id = :media_id AND ".
+        ($watch->serie_id ? 'serie_id = :serie_id' : 'serie_id IS NULL');
+
+
+        $data = array(
+            "watch_duration"    =>  $watch->watch_duration,
+            "user_id"           =>  $watch->user_id,
+            "media_id"          =>  $watch->media_id,
+        );
+
+        if($watch->serie_id)
+            $data["serie_id"] = $watch->serie_id;
+
+        $req = history::getMediaHistory($watch->user_id, 
+        $watch->media_id, 
+        $watch->serie_id ? $watch->serie_id : null);
+
+        if(count($req) <= 0)
+            throw new Exception("History media not found");
+
+        $req = $db->prepare($query);
+        $req->execute($data);
+
+        $req->closeCursor();
+
+        $db = null;
+
+        
+
     }
 
     public static function deleteHistory($history_id) {
