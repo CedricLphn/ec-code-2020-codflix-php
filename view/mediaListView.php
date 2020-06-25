@@ -14,7 +14,7 @@
 </div>
 
 <div class="media-list" id="results">
-    <?= require('api/searchView.php'); ?>
+    <?php require('api/searchView.php'); ?>
 </div>
 
 <?php $content = ob_get_clean(); ?>
