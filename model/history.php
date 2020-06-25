@@ -199,11 +199,9 @@ class history extends CoreModel
         if(!is_null($serie_id))
             $statement[count($statement)] = $serie_id;
 
-        CoreModel::dd($statement);
         $req = $db->prepare($query);
         $req->execute($statement);
 
-        CoreModel::dd($req);
 
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }
