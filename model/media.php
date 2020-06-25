@@ -135,11 +135,7 @@ class Media extends CoreModel {
     $db = null;
     $fetch = $req->fetch(PDO::FETCH_ASSOC);
 
-    if($fetch) {
-      return $fetch;
-    }else {
-      throw new Exception("Media not found");
-    }
+    return $fetch;
     
   }
 

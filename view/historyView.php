@@ -17,11 +17,11 @@
     </thead>
     <tbody id="historyContent">
         <?php foreach ($history as $media) : ?>
-            <tr>
+            <tr id="row-<?= $media['id'] ?>">
                 <th scope="row"><?= $media["media_title"] ?><?= $media["serie_title"] != NULL ? ': Episode ' . $media["episode"] . ' saison ' . $media["season"] : ''; ?></th>
                 <td><?= $media['start_date'] ?></td>
                 <td><?= $media['finish_date'] == NULL ? '-' : $media['finish_date'] ?></td>
-                <td><a class="btn btn-danger text-white"><i class="fas fa-trash-alt"></i></a></td>
+                <td><button type="button" class="btn btn-danger text-white delete" id="delete" data-id="<?= $media['id'] ?>"><i class="fas fa-trash-alt"></i></button></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
@@ -76,4 +76,11 @@
         })
 
     })
+
+    $(".delete").on('click', function () {
+        let data_id = $(this).attr('data-id');
+        $.ajax(`/api/?action=history&query=delete&id=${data_id}`).done(() => {
+            $(`#row-${data_id}`).remove();
+        })
+    });
 </script>
