@@ -45,7 +45,7 @@ if ( isset( $_GET['action'] ) ):
 
     case 'profil':
       if(!$_SESSION['user_id']) homePage();
-      else profilPage();
+      else profilPage(!empty($_POST) ? $_POST : null );
     break;
 
     case 'history':

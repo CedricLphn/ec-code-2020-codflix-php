@@ -187,4 +187,19 @@ class User {
 
   }
 
+  public function updateEmail() {
+    
+    $db = init_db();
+
+    $req = $db->prepare("UPDATE user SET email = :email WHERE id = :user_id");
+    $req->execute(array(
+      "email" => $this->getEmail(),
+      "user_id"    => $this->getId()
+    ));
+
+    $req->closeCursor();
+
+    $db = null;
+  }
+
 }
