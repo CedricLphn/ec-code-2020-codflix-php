@@ -9,13 +9,12 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : false;
 if(!$user_id) {
     header('HTTP/1.0 401 Unauthorized');
     echo "Unauthorized access";
-    die();
-}
+    throw new Exception("Bad request");
 
-if(!$query) {
+}elseif(!$query) {
     header('HTTP/1.0 400 Bad request');
     echo "Bad request";
-    die();
+    throw new Exception("Bad request");
 }
 
 function historyApi() {
