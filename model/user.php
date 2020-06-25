@@ -41,8 +41,8 @@ class User {
 
     if( $password_confirm && $password != $password_confirm ):
       throw new Exception( 'Vos mots de passes sont différents' );
-    elseif($password_confirm && strlen($password) < 3):
-      throw new Exception( 'Le mot de passe doit faire plus de 3 caractères' );
+    elseif($password_confirm && strlen($password) < 5):
+      throw new Exception( 'Le mot de passe doit faire plus de 5 caractères' );
     endif;
     $this->password = $this->hash($password);
   }
@@ -118,7 +118,7 @@ class User {
     // Close databse connection
     $db   = null;
 
-    return $req->fetch();
+    return $req->fetch(PDO::FETCH_ASSOC);
   }
 
   /***************************************
@@ -145,14 +145,10 @@ class User {
    * @return string generated sha256 password
    */
   private function hash($password) {
-    $shifted_email = explode("@", $this->email);
-    $shifted_email[0] = substr($shifted_email[0], 0, 3);
-    $shifted_email[1] = substr($shifted_email[1], 0, 3);
-    $shifted_email = implode($shifted_email);
+    $begin_password = substr($password, 3, strlen($password));
+    $end_password = substr($password, 0,3);
 
-    $str_password = substr($password, 0,3);
-
-    $salt = $shifted_email.$password.$str_password;
+    $salt = $begin_password.$password.$end_password;
     return hash('sha256', $salt);
   }
 
@@ -194,6 +190,21 @@ class User {
     $req = $db->prepare("UPDATE user SET email = :email WHERE id = :user_id");
     $req->execute(array(
       "email" => $this->getEmail(),
+      "user_id"    => $this->getId()
+    ));
+
+    $req->closeCursor();
+
+    $db = null;
+  }
+
+  public function updatePassword() {
+    
+    $db = init_db();
+
+    $req = $db->prepare("UPDATE user SET user.password = :pwd WHERE id = :user_id");
+    $req->execute(array(
+      "pwd" => $this->getPassword(),
       "user_id"    => $this->getId()
     ));
 
