@@ -39,17 +39,22 @@ if ( isset( $_GET['action'] ) ):
     break;
 
     case 'watch':
-      if(!$_SESSION['user_id']) homePage();
+      if(!isset($_SESSION['user_id'])) homePage();
+      else watchPage();
+    break;
+
+    case 'watch':
+      if(!isset($_SESSION['user_id'])) homePage();
       else watchPage();
     break;
 
     case 'profil':
-      if(!$_SESSION['user_id']) homePage();
+      if(!isset($_SESSION['user_id'])) homePage();
       else profilPage(!empty($_POST) ? $_POST : null );
     break;
 
     case 'history':
-      if(!$_SESSION['user_id']) homePage();
+      if(!isset($_SESSION['user_id'])) homePage();
       else historyPage();
     break;
 

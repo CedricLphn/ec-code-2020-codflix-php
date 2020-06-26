@@ -18,6 +18,28 @@ class watchlist {
 
     }
 
+    public static function getMovies($user_id) {
+        $db = init_db();
+
+        $req = $db->prepare("SELECT media.*
+        FROM watchlist
+        INNER JOIN media
+        ON watchlist.media_id = media.id
+        INNER JOIN genre
+        ON media.genre_id = genre.id
+        WHERE watchlist.user_id = :user_id
+        ORDER BY watchlist.id DESC");
+        $req->execute(array(
+            "user_id"   =>  $user_id
+        ));
+
+        if($req->rowCount() < 1)
+            return false;
+
+        return $req->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
     public static function addMovie($user_id, $media_id) {
         $db = init_db();
 

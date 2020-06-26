@@ -1,4 +1,7 @@
 <?php ob_start(); ?>
+<div class="media-list" id="favorite">
+    <?php require('watchlistView.php'); ?>
+</div>
 
 <div class="row">
     <div class="col-md-4 offset-md-8">

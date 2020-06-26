@@ -21,6 +21,7 @@ if(!isset($_GET['action'])) {
         break;
         case 'search':
             searchApi();
+        break;
         case 'watchlist':
             watchlistPage();
         break;

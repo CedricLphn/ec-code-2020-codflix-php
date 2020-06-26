@@ -8,10 +8,13 @@ require_once( 'model/watchlist.php' );
 ***************************/
 
 function mediaPage() {
+  $user_id = isset($_SESSION["user_id"]) ? $_SESSION["user_id"] : false;
 
   $search = isset( $_GET['title'] ) ? htmlentities($_GET['title']) : null;
 
   $test = explode(":", $search);
+
+  $favorites = watchlist::getMovies($user_id);
 
   $medias = Media::filterMedias('');
 
@@ -31,15 +34,7 @@ function showMedia() {
   if($id && is_numeric($id)) {
     
     try {
-      $data = Media::getMediaById($id);
-
-      ## WATCH LIST
-      $watchlist = watchlist::getMovie($user_id, $id);
-      if($watchlist):
-        $is_favorite = true;
-      else:
-        $is_favorite = false;
-      endif;
+      $data = media::getMediaById($id);
     }catch(Exception $e) {
       header('Location: index.php');
     }
