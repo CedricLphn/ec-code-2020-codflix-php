@@ -1,12 +1,13 @@
 <?php ob_start(); ?>
 
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
+<div id="" class="jumbotron jumbotron-fluid  md-banner">
+    <div class="overlay"></div>
+    <div class="container ">
         <h1 class="display-4 text-center"><?= $media->getTitle(); ?></h1>
         <div class="text-center" id="info">
-            <span class="badge badge-pill badge-primary"><?= $media->getType(); ?></span>
-            <span class="badge badge-pill badge-primary"><?= $md->genre; ?></span>
-            <span class="badge badge-pill badge-primary"><?= $time_total; ?></span>
+            <span class="badge <?= ($media->gettype == "Film") ? 'badge-warning' : 'badge-info' ?>"><?= $media->getType(); ?></span>
+            <span class="badge badge-success"><?= $md->genre; ?></span>
+            <span class="badge badge-dark"><?= $time_total; ?></span>
         </div>
         <div class="text-center">
             <a class="my-4 btn btn-danger btn-lg" href="?action=watch&media=<?= $media->getId(); ?>" role="button"><i class="fas fa-film"></i> Voir la bande annonce</a>
@@ -69,7 +70,8 @@
             dataType: 'jsonp',
         })
         .then(function(response) {
-            $("#info").append(`<span class="badge badge-pill badge-primary">${response.vote_average}</span>`)
+            response = response.results[0];
+            $("#info").append(`<span class="badge badge-primary">${response.vote_average}</span>`)
             $(".jumbotron").css("background-image", `url(http://image.tmdb.org/t/p/original/${response.backdrop_path})`)
             $(".jumbotron").css("background-size", `cover`)
             let id = response.id;

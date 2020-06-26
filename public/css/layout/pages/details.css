@@ -1,3 +1,29 @@
+
+.md-banner {
+    position: relative;
+    background-color: black;    
+    overflow: hidden;
+}
+.md-banner>.container {
+    position: relative;
+    opacity: 1;
+    color:white;    
+    z-index: 2;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 0;
+  }
+  
+
+
 .serie-season {
     border: 1px solid #373737;
 
