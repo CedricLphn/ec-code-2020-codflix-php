@@ -1,8 +1,8 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
-  $( '#sidebarCollapse' ).on( 'click', function() {
+  $('#sidebarCollapse').on('click', function () {
 
-    $( '#sidebar' ).toggleClass('open');
+    $('#sidebar').toggleClass('open');
 
   });
 

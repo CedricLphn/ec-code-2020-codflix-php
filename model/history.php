@@ -134,23 +134,14 @@ class history extends CoreModel
         return $this->user_id;
     }
 
-    ## UTILS
-    public static function toDateString($timestamp) {
-        if(!is_numeric($timestamp))
-            throw new Exception("Timestamp must be numeric");
-
-        $date = new DateTime();
-        $date->setTimestamp($timestamp);
-
-        return $date->format("Y-m-d H:i:s");
-
-    }
+    /***************************
+     * -------- CRUD -----------
+     ***************************/
 
     public static function createHistory($media) {
 
-        $start_date = history::toDateString($media->start_date);
+        $start_date = Utils::toDateString($media->start_date);
         $serie_id   = isset($media->serie_id) ? $media->serie_id : NULL;
-        # $finish_date = (!is_null($this->getFinishDate())) ? $this->toDateString($this->getFinishDate) : NULL;
 
         $db = init_db();
 
@@ -163,6 +154,9 @@ class history extends CoreModel
             "serie_id" => $serie_id,
             "start_date" => $start_date,
         ));
+
+        // Close databse connection
+        $db   = null;
 
     }
 
@@ -187,6 +181,7 @@ class history extends CoreModel
         ORDER BY history.id DESC, history.watch_duration DESC");
         $req->execute(array($user_id));
 
+        $db   = null;
 
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -203,6 +198,8 @@ class history extends CoreModel
         $req = $db->prepare($query);
         $req->execute($statement);
 
+        $db   = null;
+
 
         return $req->fetch(PDO::FETCH_ASSOC);
     }
@@ -217,11 +214,14 @@ class history extends CoreModel
             return $e->getMessage();
         }
 
+        $db   = null;
+        
 
         return true;
     }
 
     public static function updateCurrentTime($watch) {
+
         if(!$watch->user_id)
             throw new Exception("user_id is required");
 
@@ -241,13 +241,14 @@ class history extends CoreModel
         media_id = :media_id AND ".
         ($watch->serie_id ? 'serie_id = :serie_id' : 'serie_id IS NULL');
 
+
         $data = array(
             "watch_duration"    =>  $watch->watch_duration,
             "user_id"           =>  $watch->user_id,
             "media_id"          =>  $watch->media_id,
         );
 
-        if(isset($watch->serie_id))
+        if(isset($watch->serie_id) && $watch->serie_id)
             $data["serie_id"] = $watch->serie_id;
 
         if(isset($watch->finish_date))
@@ -281,6 +282,7 @@ class history extends CoreModel
             return $e->getMessage();
         }
 
+        $db   = null;
 
         return true;
     }

@@ -49,35 +49,35 @@ let sendCurrentTime = false;
 
 
 var update = setInterval(updateTimestamp, 5000);
+
 function onPlayerStateChange(event) {
     // USER ENDED VIDEO
     if (event.data == YT.PlayerState.ENDED) {
-        console.log("end");
         $.post("/api/?action=history&query=update_timestamp", {
             mediaId: mediaId,
             serieId: serieId,
-            currentTime : 0,
+            currentTime: 0,
             action: 'done'
         });
 
         sendCurrentTime = false;
         clearInterval(update);
 
-    }else if (event.data == YT.PlayerState.PLAYING) {
+    } else if (event.data == YT.PlayerState.PLAYING) {
         sendCurrentTime = true;
 
-    }else if (event.data == YT.PlayerState.PAUSED) {
+    } else if (event.data == YT.PlayerState.PAUSED) {
         updateTimestamp();
         sendCurrentTime = false;
 
     }
 
-    
-    
+
+
 }
 
 function updateTimestamp() {
-    if(!sendCurrentTime)
+    if (!sendCurrentTime)
         return;
 
     $.post("/api/?action=history&query=update_timestamp", {

@@ -13,46 +13,48 @@
                         if (!isset($success_msg)) {
                         ?>
 
-                            <div class="form-group">
-                                <label for="email">Adresse email</label>
-                                <input type="email" name="email" value="<?= $contact->email; ?>" id="email" class="form-control" />
-                            </div>
+                        <div class="form-group">
+                            <label for="email">Adresse email</label>
+                            <input type="email" name="email" value="<?= $contact->email; ?>" id="email"
+                                class="form-control" />
+                        </div>
 
-                            <div class="form-group">
-                                <label for="email">Objet de la demande</label>
-                                <input name="subject" value="<?= $contact->subject; ?>" id="email" class="form-control" />
-                            </div>
+                        <div class="form-group">
+                            <label for="email">Objet de la demande</label>
+                            <input name="subject" value="<?= $contact->subject; ?>" id="email" class="form-control" />
+                        </div>
 
-                            <div class="form-group">
-                                <label for="message">Votre message :</label>
-                                <textarea name="message" class="form-control" id="message" placeholder="Mon message" rows="3"><?= $contact->message ?></textarea>
-                            </div>
+                        <div class="form-group">
+                            <label for="message">Votre message :</label>
+                            <textarea name="message" class="form-control" id="message" placeholder="Mon message"
+                                rows="3"><?= $contact->message ?></textarea>
+                        </div>
 
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <a href="index.php" class="btn btn-block bg-blue">Retour</a>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="submit" name="Valider" class="btn btn-block bg-red" />
-                                    </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="index.php" class="btn btn-block bg-blue">Retour</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="submit" name="Valider" class="btn btn-block bg-red" />
                                 </div>
                             </div>
-                            <span class="error-msg">
-                                <?= isset($error_msg) ? $error_msg : null; ?>
-                            </span>
+                        </div>
+                        <span class="error-msg">
+                            <?= isset($error_msg) ? $error_msg : null; ?>
+                        </span>
                         <?php
                         } else {
                         ?>
-                            <span class="error-msg text-success">
-                                <?= $success_msg ?>
-                            </span>
-                            <hr />
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <a href="index.php" class="btn btn-block bg-danger">Retour</a>
-                                </div>
+                        <span class="error-msg text-success">
+                            <?= $success_msg ?>
+                        </span>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="index.php" class="btn btn-block bg-danger">Retour</a>
                             </div>
+                        </div>
                         <?php
                         }
                         ?>

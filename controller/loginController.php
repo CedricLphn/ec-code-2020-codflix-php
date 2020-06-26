@@ -26,10 +26,10 @@ function activation_code($code) {
   $user->id = isset( $_SESSION['user_id'] ) ? $_SESSION['user_id'] : false;
 
   try {
-    user::activateAccount(htmlentities($code));
+    user::activateAccount( htmlentities( $code ) );
     $success_msg = "Votre compte est désormais actif.";
   }catch(Exception $e) {
-    $error_msg = $e->getMessage();
+    $error_msg   = $e->getMessage();
   }
 
   if( !$user->id ):

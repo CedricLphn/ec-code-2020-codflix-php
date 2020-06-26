@@ -1,14 +1,18 @@
 <?php
 /**
- * J'ai un peu craqué sur la suppression du compte :(
+ * WHEN A USER VALIDE A FORM
+ *
+ * @param array $post
+ * @return void
  */
-
-
 function profilPage($post = null) {
     $user_id = htmlentities($_SESSION["user_id"]);
     
-    $user = user::getUserById($user_id);
+    $user    = user::getUserById($user_id);
 
+    /**
+     * ROUTING 
+     */
     if(isset($post["action"])):
         $action = htmlentities($post["action"]);
     else:
@@ -33,13 +37,19 @@ function profilPage($post = null) {
 
 }
 
+/**
+ * CHANGE EMAIL
+ *
+ * @param array $post
+ * @return void
+ */
 function changeEmail($post) {
     $user_id = htmlentities($_SESSION["user_id"]);
     
     
-    $login = new stdClass();
-    $login->id = $user_id;
-    $login->email = htmlentities($post["new_email"]);
+    $login           = new stdClass();
+    $login->id       = $user_id;
+    $login->email    = htmlentities($post["new_email"]);
     $login->password = null;
     
     
@@ -62,15 +72,21 @@ function changeEmail($post) {
 
 }
 
+/**
+ * CHANGE PASSOWRD
+ *
+ * @param array $post
+ * @return void
+ */
 function changePassword($post) {
-    $user_id = htmlentities($_SESSION["user_id"]);
-    $user_info = user::getUserById($user_id);
+    $user_id    = htmlentities($_SESSION["user_id"]);
+    $user_info  = user::getUserById($user_id);
 
     try {
         
-        $login = new stdClass();
-        $login->id = $user_id;
-        $login->email = $user_info["email"];
+        $login           = new stdClass();
+        $login->id       = $user_id;
+        $login->email    = $user_info["email"];
         $login->password = htmlentities($post["password"]);
 
 
@@ -94,14 +110,22 @@ function changePassword($post) {
 
 }
 
+/**
+ * J'ai un peu craqué sur la suppression du compte :(
+ *
+ * DELETE ACCOUNT
+ *
+ * @param array $post
+ * @return void
+ */
 function deleteAccount($post) {
-    $user_id = htmlentities($_SESSION["user_id"]);
-    $user_info = user::getUserById($user_id);
+    $user_id    = htmlentities($_SESSION["user_id"]);
+    $user_info  = user::getUserById($user_id);
     
     
-    $login = new stdClass();
-    $login->id = $user_id;
-    $login->email = $user_info["email"];
+    $login           = new stdClass();
+    $login->id       = $user_id;
+    $login->email    = $user_info["email"];
     $login->password = $post["delete_account"];
     
     

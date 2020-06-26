@@ -1,5 +1,4 @@
 $.get(`/api/?action=watchlist&query=check&id=${media_id}`).done((data) => {
-    console.log(data.present);
     if (data.present == true) {
         $("#favorite").addClass("fas");
     } else {
@@ -10,10 +9,8 @@ $.get(`/api/?action=watchlist&query=check&id=${media_id}`).done((data) => {
 });
 
 $("#favorite").click(() => {
-    console.log("click");
     $.get(`/api/?action=watchlist&query=toggle&id=${media_id}`).done((data) => {
         let etat = data.etat
-        console.log(etat);
         if (etat == "add") {
             $("#favorite").removeClass("fas");
             $("#favorite").addClass("far");
@@ -25,7 +22,7 @@ $("#favorite").click(() => {
 })
 
 $.ajax({
-        url: 'https://api.themoviedb.org/3/search/tv?api_key=' + api_key + '&language=fr&query='+ media_title,
+        url: 'https://api.themoviedb.org/3/search/tv?api_key=' + api_key + '&language=fr&query=' + media_title,
         dataType: 'jsonp',
     })
     .then(function (response) {
@@ -50,7 +47,6 @@ $.ajax({
         ${credit.cast[i].name}
     </div>
 </div>`;
-                    console.log(html);
                     $("#actor").append(html);
                 }
 

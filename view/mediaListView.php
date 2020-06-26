@@ -2,10 +2,10 @@
 <?php
 if($favorites) {
 ?>
-    <h1>Mes coups de coeur</h1>
-    <div class="media-list">
-        <?php require('watchlistView.php'); ?>
-    </div>
+<h1>Mes coups de coeur</h1>
+<div class="media-list">
+    <?php require('watchlistView.php'); ?>
+</div>
 <?php
 }
 ?>
@@ -14,7 +14,7 @@ if($favorites) {
         <form method="get">
             <div class="form-group has-btn">
                 <input type="search" id="search" name="title" value="<?= $search; ?>" class="form-control"
-                       placeholder="Rechercher un film ou une série">
+                    placeholder="Rechercher un film ou une série">
 
                 <button type="button" class="btn btn-block bg-red">Valider</button>
             </div>
@@ -33,9 +33,9 @@ if($favorites) {
 <script>
     $('#search').on('keypress', function (e) {
         if (e.keyCode == 13) {
-        e.preventDefault();
+            e.preventDefault();
         }
-        
+
         let search = $("#search").val();
 
         $.ajax(`/api/?action=search&query=${search}`).done((data) => {

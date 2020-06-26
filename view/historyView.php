@@ -17,22 +17,27 @@
     </thead>
     <tbody id="historyContent">
         <?php foreach ($history as $media) : ?>
-            <tr id="row-<?= $media['id'] ?>">
-                <th scope="row"><?= $media["media_title"] ?><?= $media["serie_title"] != NULL ? ': Episode ' . $media["episode"] . ' saison ' . $media["season"] : ''; ?></th>
-                <td><?= $media['start_date'] ?></td>
-                <td><?= $media['finish_date'] == NULL ? '-' : $media['finish_date'] ?></td>
-                <td><button type="button" class="btn btn-danger text-white delete" id="delete" data-id="<?= $media['id'] ?>"><i class="fas fa-trash-alt"></i></button></td>
-            </tr>
+        <tr id="row-<?= $media['id'] ?>">
+            <th scope="row">
+                <?= $media["media_title"] ?><?= $media["serie_title"] != NULL ? ': Episode ' . $media["episode"] . ' saison ' . $media["season"] : ''; ?>
+            </th>
+            <td><?= $media['start_date'] ?></td>
+            <td><?= $media['finish_date'] == NULL ? '-' : $media['finish_date'] ?></td>
+            <td><button type="button" class="btn btn-danger text-white delete" id="delete"
+                    data-id="<?= $media['id'] ?>"><i class="fas fa-trash-alt"></i></button></td>
+        </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
 <?php if(count($history)): ?>
 <div class="text-center">
-    <button type="button" class="btn btn-danger text-white" id="deleteAllBtn" data-toggle="modal" data-target="#staticBackdrop"><i class="fas fa-trash-alt"></i> Supprimer mon historique</button>
+    <button type="button" class="btn btn-danger text-white" id="deleteAllBtn" data-toggle="modal"
+        data-target="#staticBackdrop"><i class="fas fa-trash-alt"></i> Supprimer mon historique</button>
 </div>
 <?php endif; ?>
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -58,7 +63,7 @@
 <?php require('dashboard.php'); ?>
 
 <script>
-    $('#myModal').on('shown.bs.modal', function() {
+    $('#myModal').on('shown.bs.modal', function () {
         $('#staticBackdrop').trigger('focus')
 
     })
@@ -72,7 +77,7 @@
             $("#historyContent").remove();
             $('#staticBackdrop').modal('hide');
             $("#deleteAllBtn").hide();
-            
+
         })
 
     })

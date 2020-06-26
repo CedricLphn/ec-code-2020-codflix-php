@@ -41,8 +41,10 @@ class User {
 
     if( $password_confirm && $password != $password_confirm ):
       throw new Exception( 'Vos mots de passes sont différents' );
+
     elseif($password_confirm && strlen($password) < 5):
       throw new Exception( 'Le mot de passe doit faire plus de 5 caractères' );
+
     endif;
     $this->password = $this->hash($password);
   }
@@ -141,12 +143,18 @@ class User {
 
   /**
    * hash a password with salt & sha256
-   *
+   * Eg: 
+   *  ThibaudEtRobin = my password
+   *  Cut in two parti :
+   *    - (1) First: the first 3 characters (Thi)
+   *    - (2) Second: The rest of it (baudetRobin)
+   * And the pattern salt is (2) + my password + (1)
+   * Result : baudetRobinThibaudetRobinThi
    * @return string generated sha256 password
    */
   private function hash($password) {
     $begin_password = substr($password, 3, strlen($password));
-    $end_password = substr($password, 0,3);
+    $end_password   = substr($password, 0,3);
 
     $salt = $begin_password.$password.$end_password;
     return hash('sha256', $salt);

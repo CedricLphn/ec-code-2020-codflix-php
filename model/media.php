@@ -151,15 +151,17 @@ class Media extends CoreModel {
     if(!is_numeric($id))
       throw new Exception("getMediaById : the id must be numeric");
 
-    $db = init_db();
+    $db   = init_db();
 
-    $req = $db->prepare("SELECT media.*, genre.name AS genre FROM media  
+    $req  = $db->prepare("SELECT media.*, genre.name AS genre FROM media  
     INNER JOIN genre
     ON genre_id = genre.id
     WHERE media.id = ?");
     $req->execute([$id]);
 
-    $db = null;
+    // Close databse connection
+    $db   = null;
+    
     $fetch = $req->fetch(PDO::FETCH_ASSOC);
 
     return $fetch;

@@ -37,6 +37,6 @@
   var mediaId = <?= $history->getMediaId(); ?>;
   var serieId =  "<?= ($history->getSerieId()) ? $history->getSerieId() : 'false'; ?>"
   var videoId = '<?= $type == "movie" ? $media->getTrailerUrl() : $media->getMediaUrl(); ?>';
-  var currentTime = <?= $history->getWatchDuration(); ?>
+  var currentTime = <?= $history->getWatchDuration() != '' ? $history->getWatchDuration(): "0" ; ?>
 </script>
 <script src="public/js/watcher.js"></script>

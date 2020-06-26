@@ -1,6 +1,7 @@
 <?php
 
 require_once( 'model/CoreModel.php' );
+require_once( 'model/Utils.php' );
 
 /**************************
 * --- AUTOLOAD CONTROLLER---

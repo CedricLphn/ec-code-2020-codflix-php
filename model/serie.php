@@ -118,15 +118,18 @@ class serie extends CoreModel
         return $this->type;
     }
 
+    /**
+     * GET SERIE(S)
+     */
     
     public static function getSeriesByMediaId($media_id) {
 
         if(!is_numeric($media_id))
             throw new Exception("id must be numeric");
 
-        $db = init_db();
+        $db     = init_db();
 
-        $req = $db->prepare("SELECT serie.*
+        $req    = $db->prepare("SELECT serie.*
         FROM serie
         WHERE media_id = ?");
         $req->execute([$media_id]);
@@ -142,9 +145,9 @@ class serie extends CoreModel
         if(!is_numeric($id))
             throw new Exception("id must be numeric");
 
-        $db = init_db();
+        $db     = init_db();
 
-        $req = $db->prepare("SELECT serie.*, media.title AS media_title, media.type FROM serie
+        $req    = $db->prepare("SELECT serie.*, media.title AS media_title, media.type FROM serie
         INNER JOIN media
         ON serie.media_id = media.id
         WHERE serie.id = ?");

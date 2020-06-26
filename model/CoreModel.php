@@ -9,14 +9,4 @@ class CoreModel {
           }
         }
     }
-
-    public static function dd($log) {
-        echo "<pre>";
-        var_dump($log);
-        echo "</pre>";
-    }
-
-    public static function getAbsoluteUrl() {
-      return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/";
-    }
 }
