@@ -1,9 +1,18 @@
 
+.pointer {
+    cursor: pointer;
+}
+
+.watchlist {
+    font-size: 30px;
+}
+
 .md-banner {
     position: relative;
     background-color: black;    
     overflow: hidden;
 }
+
 .md-banner>.container {
     position: relative;
     opacity: 1;

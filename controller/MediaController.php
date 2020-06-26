@@ -1,7 +1,7 @@
 <?php
 
 require_once( 'model/media.php' );
-require_once( 'SerieController.php' );
+require_once( 'model/watchlist.php' );
 
 /***************************
 * ----- LOAD HOME PAGE -----
@@ -26,11 +26,20 @@ function mediaPage() {
 function showMedia() {
 
   $id = isset($_GET['media']) ? $_GET['media'] : false;
+  $user_id = isset($_SESSION["user_id"]) ? $_SESSION["user_id"] : false;
 
   if($id && is_numeric($id)) {
     
     try {
       $data = Media::getMediaById($id);
+
+      ## WATCH LIST
+      $watchlist = watchlist::getMovie($user_id, $id);
+      if($watchlist):
+        $is_favorite = true;
+      else:
+        $is_favorite = false;
+      endif;
     }catch(Exception $e) {
       header('Location: index.php');
     }
