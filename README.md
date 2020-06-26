@@ -12,18 +12,18 @@ Nothing else is required. You can now start your development
 
 ## Informations
 
-Le projet Cod'flix est crée dans le cadre de l'épreuve certifiante de l'école Coding Factory en 2020. 
+Le projet Cod'flix est créé dans le cadre de l'épreuve certifiant de l'école Coding Factory en 2020.
 
-Le code initial ainsi que sa structure ont été respectés. Aucun framework additionnel n'a été ajouté (sauf l'API Youtube Embed, voir ci dessous).
+Le code initial ainsi que sa structure ont été respectés. Aucun framework additionnel n'a été ajouté (sauf l'API Youtube Embed, voir ci-dessous).
 
-Concernant les fonctionnalités ajoutés, elles respectent les demandes initiées dans le cahier des charges. Les bonus comme l'intégration de TMDB et le support des favoris ont été ajoutés mais pas les médias en lien avec l'utilisateur.
+Concernant les fonctionnalités ajoutées, elles respectent les demandes initiées dans le cahier des charges. Les bonus comme l'intégration de TMDB et le support des favoris ont été ajoutés mais pas les médias en lien avec l'utilisateur.
 
 
 ### Youtube embed API
 
-Probablement le seul framework (si on peux l'appeler ainsi) que j'ai ajouté. Elle est d'abord issue de l'équipe de développeur Google, elle permet notamment d'avoir le temps courant de l'utilisateur et elle permet de savoir si le stream est fini.
+Probablement le seul framework (si on peut l'appeler ainsi) que j'ai ajouté. Elle est d'abord issue de l'équipe de développeur Google, elle permet notamment d'avoir le temps courant de l'utilisateur et elle permet de savoir si le stream est fini.
 
-Au niveau de la maintenabilité, l'API est présente depuis ~2010. Elle n'a pas beaucoup de fonctionnalité mais la documentation explique très bien et les problèmes que j'ai rencontrés personnellement ont été vite résolu grâce à la communauté (Stackoverflow, etc).
+Au niveau de la maintenabilité, l'API est présente depuis ~2010. Elle n'a pas beaucoup de fonctionnalité mais la documentation explique très bien et les problèmes que j'ai rencontrés personnellement ont été vite résolus grâce à la communauté (Stackoverflow, etc).
 
 Date du début: 23/06/2020
 
