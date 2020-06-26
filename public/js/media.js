@@ -1,8 +1,9 @@
 $.get(`/api/?action=watchlist&query=check&id=${media_id}`).done((data) => {
-    if (data.present) {
-        $("#favorite").addClass("far");
-    } else {
+    console.log(data.present);
+    if (data.present == true) {
         $("#favorite").addClass("fas");
+    } else {
+        $("#favorite").addClass("far");
 
     }
 
