@@ -20,7 +20,7 @@ function searchApi() {
 
     $search_by_year = false;
     # Check if the user searches in a date
-    if(preg_match("/^(?:annee:.+)*$/", $search)) {
+    if(preg_match("/^(?:annee:.+)*$/", $search) && $search != '') {
         $search_by_year = true;
         # Explode the string
         $filter = explode(':' , $search);
